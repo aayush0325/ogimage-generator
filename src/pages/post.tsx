@@ -33,7 +33,7 @@ const PostPage: React.FC = () => {
                             type="text" 
                             className="w-full border p-3 focus:outline-none rounded"
                             placeholder="Enter title"
-                            onChange={e => setTitle(e.target.value)}
+                            onChange={e => {setTitle(e.target.value),console.log(title)}}
                         />
                         <div className="text-white text-xl font-bold my-2">
                             Content
