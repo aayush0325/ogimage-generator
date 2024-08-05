@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { FaGithub } from "react-icons/fa"; // Import GitHub icon from react-icons
+import { SignInButton } from "@clerk/clerk-react";
 
 export default function LandingPage() {
     const navigate = useNavigate();
@@ -24,7 +25,7 @@ export default function LandingPage() {
                     className="text-black bg-green-500 m-2 sm:m-5 p-2 sm:p-4 rounded cursor-pointer font-bold hover:px-4 sm:hover:px-6 transition-all duration-300 active:bg-green-600 w-full sm:w-auto text-center"
                     onClick={() => navigate('/post')}
                 >
-                    GET STARTED
+                    <SignInButton><button>GET STARTED</button></SignInButton>
                 </div>
                 <div
                     className="text-white bg-gray-800 m-2 sm:m-5 p-2 sm:p-4 rounded cursor-pointer font-bold flex items-center justify-center hover:bg-gray-700 transition-all duration-300 active:bg-gray-900 w-full sm:w-auto"

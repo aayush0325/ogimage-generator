@@ -1,26 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-
-import LandingPage from './pages/landing'
-import PostPage from './pages/post'
-
+import AppRoutes from './AppRoutes'
 import './index.css'
 
-import { createBrowserRouter,RouterProvider } from 'react-router-dom'
+import { ClerkProvider } from '@clerk/clerk-react'
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <LandingPage />,
-  },{
-    path: "/post",
-    element: <PostPage />,
-  }
-]);
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
+if (!PUBLISHABLE_KEY) {
+  throw new Error("Missing Publishable Key")
+}
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
+      <AppRoutes/>
+    </ClerkProvider>
   </React.StrictMode>,
 )
