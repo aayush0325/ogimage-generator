@@ -40,7 +40,7 @@ export default function ViewPost() {
                         </div>
                         <UserButton />
                     </div>
-                    <div className="mt-2 whitespace-pre-wrap flex-grow">
+                    <div className="mt-2 whitespace-pre-wrap flex-grow overflow-auto">
                         {content ?? "No content available."}
                     </div>
                     <div className="mt-auto self-end text-sm text-gray-600">
