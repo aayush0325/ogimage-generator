@@ -1,6 +1,9 @@
 import { useLocation } from "react-router-dom";
 import { UserButton } from "@clerk/clerk-react";
 import { useClerk } from "@clerk/clerk-react";
+import { useState } from "react";
+import {Helmet} from "react-helmet";
+import pic from '../assets/react.svg'
 
 export default function ViewPost() {
     const { user } = useClerk();
@@ -11,16 +14,22 @@ export default function ViewPost() {
     const imageURL: string | null = queryParams.get('imageURL');
     const title: string | null = queryParams.get('title');
     const content: string | null = queryParams.get('content');
-
+    const [imageLoaded, setImageLoaded] = useState(true);
     return (
-        <div className="bg-gray-900 h-screen w-screen flex flex-col items-center p-6">
+        <div className="bg-gray-900 h-screen w-screen flex flex-col items-center p-6 gap-5">
+            <Helmet>
+                <meta property="og:title" content="Your page title" />
+                <meta property="og:description" content="Your page description" />
+                <meta property="og:image" content={pic}/>
+            </Helmet>
             <div className="bg-white text-black rounded-lg shadow-lg p-3 max-w-4xl flex flex-col sm:flex-row">
-                <div className="max-h-80 min-w-fit flex justify-center items-center rounded overflow-hidden border-black border-2">
-                    {imageURL &&
+                <div className="max-h-80 min-w-fit flex justify-center items-center rounded overflow-hidden">
+                    {imageURL && imageLoaded && 
                         <img
                             src={imageURL}
                             className="w-full h-auto object-contain cursor-pointer"
                             loading="lazy"
+                            onError={()=>setImageLoaded(false)}
                         />
                     }
                 </div>
