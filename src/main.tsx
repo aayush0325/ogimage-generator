@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom/client'
 import LandingPage from './pages/landing'
 import PostPage from './pages/post'
 
+import './index.css'
+
 import { createBrowserRouter,RouterProvider } from 'react-router-dom'
 
 const router = createBrowserRouter([
