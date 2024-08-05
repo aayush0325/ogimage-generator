@@ -10,6 +10,7 @@ const PostPage: React.FC = () => {
     const [image, setImage] = useState<File | null>(null);
     const [imageURL, setImageURL] = useState<string>("");
     const [imageName, setImageName] = useState<string>("");
+    const [error, setError] = useState<string>("");
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
@@ -24,10 +25,24 @@ const PostPage: React.FC = () => {
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
             const file = event.target.files[0];
+            const allowedFormats = ['image/jpeg', 'image/png', 'image/webp'];
+            
+            if (!allowedFormats.includes(file.type)) {
+                setError("Invalid file type. Please upload an image (jpg, png, or webp).");
+                setImage(null);
+                setImageName("");
+                setImageURL("");
+                if (fileInputRef.current) {
+                    fileInputRef.current.value = "";
+                }
+                return;
+            }
+
             setImage(file);
             setImageName(file.name);
             const imageURL = URL.createObjectURL(file);
             setImageURL(imageURL);
+            setError("");
         }
     };
 
@@ -41,10 +56,15 @@ const PostPage: React.FC = () => {
     };
 
     const handleSubmit = () => {
+        if (!title.trim() || !content.trim()) {
+            setError("Title and content cannot be blank.");
+            return;
+        }
+        setError("");
         if (imageURL) {
             navigate(`/preview?imageURL=${encodeURIComponent(imageURL)}&title=${title}&content=${content}`);
-        }else{
-            navigate(`/preview?title=${title}&content=${content}`)
+        } else {
+            navigate(`/preview?title=${title}&content=${content}`);
         }
     };
 
@@ -57,6 +77,11 @@ const PostPage: React.FC = () => {
                     </div>
                     <UserButton />
                 </div>
+                {error && (
+                    <div className="text-red-500 text-center mb-4 font-bold">
+                        {error}
+                    </div>
+                )}
                 <div className="text-white text-xl font-bold my-2 sm:text-sm">
                     Title
                 </div>
@@ -64,6 +89,7 @@ const PostPage: React.FC = () => {
                     type="text" 
                     className="w-full border p-3 focus:outline-none rounded sm:text-sm"
                     placeholder="Enter title"
+                    value={title}
                     onChange={e => setTitle(e.target.value)}
                 />
                 <div className="text-white text-xl font-bold my-2 sm:text-sm">

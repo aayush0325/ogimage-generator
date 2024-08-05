@@ -10,7 +10,7 @@ export default function ViewPost() {
 
     return (
         <div>
-            <img src={imageURL ?? ""} alt={title ?? "No title"} />
+            <img src={imageURL ?? ""} />
             <h1>{title ?? "No title"}</h1>
             <p>{content ?? "No content"}</p>
         </div>
