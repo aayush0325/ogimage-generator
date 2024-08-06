@@ -40,8 +40,7 @@ export default function ViewPost() {
     return (
         <div className="bg-gray-900 h-screen w-screen flex flex-col items-center p-6 gap-5">
             <Helmet>
-                <meta property="og:title" content="Your page title" />
-                <meta property="og:description" content="Your page description" />
+                <meta property="og:title" content={title ?? ''} />
                 <meta property="og:image" content={generatedImageURL ?? ''}/>
             </Helmet>
             <div className="bg-white text-black rounded-lg shadow-lg p-3 max-w-4xl flex flex-col sm:flex-row" ref={divRef}>
